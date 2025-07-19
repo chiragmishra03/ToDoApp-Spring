@@ -23,40 +23,40 @@ public class ToDoController {
 
     @GetMapping("/todos")
     public ResponseEntity<List<ToDo>> getTodos() {
-        return ResponseEntity.ok(toDoList); // returns 200 OK with the list
+        return ResponseEntity.ok(toDoList);
     }
 
 
     @PostMapping("/todos")
-    public ResponseEntity<ToDo> createToDo(@RequestBody ToDo newToDo) {
+    public ResponseEntity<?> createToDo(@RequestBody ToDo newToDo) {
         toDoList.add(newToDo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newToDo); // returns 201 Created
+        return ResponseEntity.status(HttpStatus.CREATED).body(newToDo);
     }
 
 
     @GetMapping("/todos/{id}")
-    public ResponseEntity<ToDo> getToDoById(@PathVariable Long id) {
+    public ResponseEntity<?> getToDoById(@PathVariable Long id) {
         for (ToDo toDo : toDoList) {
             if (toDo.getId()!=null && toDo.getId().equals(id)) {
                 return ResponseEntity.ok(toDo);
             }
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(404).body("Resource not found");
     }
 
     @DeleteMapping("/todos/{id}")
-    public ResponseEntity<String> deleteToDo(@PathVariable Long id){
+    public ResponseEntity<?> deleteToDo(@PathVariable Long id){
         for (ToDo toDo:toDoList){
             if (toDo.getId()!=null && toDo.getId().equals(id)) {
                 toDoList.remove(toDo);
                 return ResponseEntity.status(200).body("Deleted Successfully");
             }
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(404).body("Resource not found");
     }
 
     @PutMapping("/todos/{id}")
-    public ResponseEntity<ToDo> updateToDo(@RequestBody ToDo newToDo,@PathVariable Long id){
+    public ResponseEntity<?> updateToDo(@RequestBody ToDo newToDo,@PathVariable Long id){
         for (ToDo toDo:toDoList){
             if (toDo.getId()!=null && toDo.getId().equals(id)) {
                 toDo.setCompleted(newToDo.isCompleted());
@@ -65,7 +65,7 @@ public class ToDoController {
                 return ResponseEntity.status(200).body(toDo);
             }
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(404).body("Resource not found");
     }
 
 
