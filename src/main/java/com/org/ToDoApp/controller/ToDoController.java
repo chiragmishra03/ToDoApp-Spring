@@ -16,9 +16,9 @@ public class ToDoController {
 
     public ToDoController(){
         toDoList = new ArrayList<>();
-        toDoList.add(new ToDo("Buy groceries", "Milk, Bread, Eggs", false,"1"));
-        toDoList.add(new ToDo("Finish project", "Complete the Spring Boot app", false,"1"));
-        toDoList.add(new ToDo("Workout", "30 minutes of cardio", true,"2"));
+        toDoList.add(new ToDo(1L,"Buy groceries", "Milk, Bread, Eggs", false,"1"));
+        toDoList.add(new ToDo(2L,"Finish project", "Complete the Spring Boot app", false,"1"));
+        toDoList.add(new ToDo(3L,"Workout", "30 minutes of cardio", true,"2"));
     }
 
     @GetMapping("/todos")
@@ -39,6 +39,30 @@ public class ToDoController {
         for (ToDo toDo : toDoList) {
             if (toDo.getId()!=null && toDo.getId().equals(id)) {
                 return ResponseEntity.ok(toDo);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/todos/{id}")
+    public ResponseEntity<String> deleteToDo(@PathVariable Long id){
+        for (ToDo toDo:toDoList){
+            if (toDo.getId()!=null && toDo.getId().equals(id)) {
+                toDoList.remove(toDo);
+                return ResponseEntity.status(200).body("Deleted Successfully");
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/todos/{id}")
+    public ResponseEntity<ToDo> updateToDo(@RequestBody ToDo newToDo,@PathVariable Long id){
+        for (ToDo toDo:toDoList){
+            if (toDo.getId()!=null && toDo.getId().equals(id)) {
+                toDo.setCompleted(newToDo.isCompleted());
+                toDo.setDescription(newToDo.getDescription());
+                toDo.setTitle(newToDo.getTitle());
+                return ResponseEntity.status(200).body(toDo);
             }
         }
         return ResponseEntity.notFound().build();

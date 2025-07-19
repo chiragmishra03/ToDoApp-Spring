@@ -21,7 +21,8 @@ public class ToDo {
     private String userId;
 
 
-    public ToDo() {}
+    public ToDo() {
+    }
 
     public Long getId() {
         return id;
@@ -62,6 +63,7 @@ public class ToDo {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
     @Override
     public String toString() {
         return "ToDo{" +
@@ -72,7 +74,9 @@ public class ToDo {
                 ", userId='" + userId + '\'' +
                 '}';
     }
-    public ToDo(String title,String description, boolean completed, String userId) {
+
+    public ToDo(Long id, String title, String description, boolean completed, String userId) {
+        this.id = id;
         this.title = title;
         this.completed = completed;
         this.description = description;
