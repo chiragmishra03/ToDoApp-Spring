@@ -16,30 +16,12 @@ public class ToDo {
 
     private String description;
 
-    public ToDo() {
-    }
-
-    @Override
-    public String toString() {
-        return "ToDo{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", completed=" + completed +
-                ", userId='" + userId + '\'' +
-                '}';
-    }
-
     private boolean completed;
 
-    public ToDo(String title,String description, boolean completed, String userId) {
-        this.title = title;
-        this.completed = completed;
-        this.description = description;
-        this.userId = userId;
-    }
-
     private String userId;
+
+
+    public ToDo() {}
 
     public Long getId() {
         return id;
@@ -78,6 +60,22 @@ public class ToDo {
     }
 
     public void setUserId(String userId) {
+        this.userId = userId;
+    }
+    @Override
+    public String toString() {
+        return "ToDo{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", completed=" + completed +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
+    public ToDo(String title,String description, boolean completed, String userId) {
+        this.title = title;
+        this.completed = completed;
+        this.description = description;
         this.userId = userId;
     }
 }
