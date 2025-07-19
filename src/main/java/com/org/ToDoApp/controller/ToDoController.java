@@ -1,6 +1,9 @@
 package com.org.ToDoApp.controller;
 
 import com.org.ToDoApp.entities.ToDo;
+import com.org.ToDoApp.service.FakeToDoService;
+import com.org.ToDoApp.service.ToDoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +17,12 @@ public class ToDoController {
 
     private static List<ToDo> toDoList ;
 
-    public ToDoController(){
+    @Autowired
+    private final ToDoService toDoService;
+
+    public ToDoController(ToDoService toDoService){
+        this.toDoService = toDoService;
+        System.out.println(toDoService.initial());
         toDoList = new ArrayList<>();
         toDoList.add(new ToDo(1L,"Buy groceries", "Milk, Bread, Eggs", false,"1"));
         toDoList.add(new ToDo(2L,"Finish project", "Complete the Spring Boot app", false,"1"));
