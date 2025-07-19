@@ -1,6 +1,7 @@
 package com.org.ToDoApp.controller;
 
 import com.org.ToDoApp.entities.ToDo;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -9,13 +10,18 @@ import java.util.List;
 @RestController
 public class ToDoController {
 
-    private static List<ToDo> todos ;
+    private static List<ToDo> toDoList ;
 
     public ToDoController(){
-        todos = new ArrayList<>();
-        todos.add(new ToDo("Buy groceries", "Milk, Bread, Eggs", false,"1"));
-        todos.add(new ToDo("Finish project", "Complete the Spring Boot app", false,"1"));
-        todos.add(new ToDo("Workout", "30 minutes of cardio", true,"2"));
+        toDoList = new ArrayList<>();
+        toDoList.add(new ToDo("Buy groceries", "Milk, Bread, Eggs", false,"1"));
+        toDoList.add(new ToDo("Finish project", "Complete the Spring Boot app", false,"1"));
+        toDoList.add(new ToDo("Workout", "30 minutes of cardio", true,"2"));
+    }
+
+    @GetMapping("/todos")
+    public List<ToDo> getTodos(){
+        return toDoList;
     }
 
 
