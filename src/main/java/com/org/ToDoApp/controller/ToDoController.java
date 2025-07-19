@@ -1,16 +1,15 @@
 package com.org.ToDoApp.controller;
 
-import com.org.ToDoApp.ToDoAppApplication;
 import com.org.ToDoApp.entities.ToDo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/v1")
 public class ToDoController {
 
     private static List<ToDo> toDoList ;
@@ -23,15 +22,28 @@ public class ToDoController {
     }
 
     @GetMapping("/todos")
-    public List<ToDo> getTodos(){
-        return toDoList;
+    public ResponseEntity<List<ToDo>> getTodos() {
+        return ResponseEntity.ok(toDoList); // returns 200 OK with the list
     }
 
+
     @PostMapping("/todos")
-    public ToDo createToDo(@RequestBody ToDo newToDo){
+    public ResponseEntity<ToDo> createToDo(@RequestBody ToDo newToDo) {
         toDoList.add(newToDo);
-        return newToDo;
+        return ResponseEntity.status(HttpStatus.CREATED).body(newToDo); // returns 201 Created
     }
+
+
+    @GetMapping("/todos/{id}")
+    public ResponseEntity<ToDo> getToDoById(@PathVariable Long id) {
+        for (ToDo toDo : toDoList) {
+            if (toDo.getId()!=null && toDo.getId().equals(id)) {
+                return ResponseEntity.ok(toDo);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 
 
 }
